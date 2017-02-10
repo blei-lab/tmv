@@ -1,0 +1,16 @@
+{% load static %}
+<!--<link href="{% static 'tmv_app/css/styling.css' %}" rel="stylesheet" type="text/css">
+-->
+<div id="topic_box">
+<table width="100%" class="light">
+    <tr class="title"><td><a href="topic/{{topic.topic}}">{{topic.title}}</a></td></tr>
+    {% if docs %}
+        {% for doc in docs %}
+        <tr id="{{ doc.title }}" class="list doc_box" onclick="window.location.href='/tmv_app/doc/{{ doc.UT }}'">
+            <td><a href="/tmv_app/doc/{{ doc.UT }}">{{ doc.title }}</a> ({{doc.PY}})</td>
+        <tr>
+        {% endfor %}
+    {% endif %}
+</table> 
+</div>
+

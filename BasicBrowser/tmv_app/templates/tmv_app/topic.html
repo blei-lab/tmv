@@ -1,0 +1,267 @@
+<html>
+<head>
+{% load static %}
+    <script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+	<script src="{% static 'tmv_app/js/d3.v3.min.js' %}"></script>
+    <script language="JavaScript" src="/static/js/jquery.rightClick.js"></script>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>{{ topic.title }}</title>
+<link href="{% static 'tmv_app/css/styling.css' %}" rel="stylesheet" type="text/css">
+
+</head>
+  <body>
+{{ nav_bar|safe }}
+<div id="top"></div>
+<h1 id="header">
+<table><tr>
+<td id="title">{{ topic.title }}</td>
+</tr></table></span>
+<hr noshade>
+</h1>
+
+<div id="main">
+
+
+<table><tr>
+<td width="100%">
+    <div id="pyGraph" height="600"></div><br>
+</td>
+
+</tr>
+</table>
+<table>
+<tr>
+<td width="25.0%">
+    <table class="dark">
+    <tr class="title">
+    <td>words</td></tr>
+    {% if terms %}
+	    {% for term in terms %}
+	    <tr class="list" onclick="window.location.href='/tmv_app/term/{{ term.term }}'" onmouseover="highlight('{{ term.title }}')" onmouseout="unhighlight('{{ term.title }}')"><td id="{{ term.title }}_list">{{ term.title }}</td><tr>
+	    {% endfor %}
+    {% endif %}
+    <tmv-topic-terms-column>
+    </table>
+</td>
+
+<td width="50.0%">
+    <table class="light">
+    <tr class="title">
+    <td>related documents</td>
+    </tr>
+    </table>
+        <table class="light">
+        {% if docs %}
+	        {% for doc in docs %}
+	        <tr id="{{ doc.title }}" class="list" onclick="window.location.href='/tmv_app/doc/{{ doc.UT }}'">
+                <td>{{ doc.PY }}</td>
+                <td>{{ doc.title }}</td>
+            <tr>
+	        {% endfor %}
+        {% endif %}
+        
+    </table>
+</td>
+
+<td width="25.0%">
+<table class="dark">
+<tr class="title">
+<td>related topics</td>
+</tr>
+<table class="dark">
+{% if corrtops %}
+	{% for corrtop in corrtops %}
+	<tr id="{{ corrtop.title }}" class="list" onclick="window.location.href='/tmv_app/topic/{{ corrtop.topic }}'">
+        <td>{{ corrtop.title }}</td>
+        <td>{{ corrtop.score }}</td>
+    <tr>
+	{% endfor %}
+{% endif %}
+</table>
+</td>
+
+</tr></table>
+</div>
+
+<div id="footer">
+<br>
+<hr noshade>
+
+<script type="text/JavaScript"> 
+    function highlight(id) {
+	   	var list = document.getElementById(id+'_list');
+	   	var bar = document.getElementById(id+'_bar');
+		if (list != null) {
+			list.style.backgroundColor='#628AE3';
+		}
+		if (bar != null) {
+			bar.style.backgroundColor='#416DCC';
+		}
+	}
+    
+    function unhighlight(id) {
+		var list = document.getElementById(id+'_list');
+	   	var bar = document.getElementById(id+'_bar');
+		if (list != null) {
+			list.style.backgroundColor='#799FF2';
+		}
+		if (bar != null) {
+			bar.style.backgroundColor='#799FF2';
+		}
+    }
+    var data = {{ yts|safe }};
+    var topic = {{ topic.topic|safe }};
+    var topic_title = '{{ topic.title }}';
+    console.log(topic)
+    console.log(topic_title)
+    console.log(data)
+
+    var width = $("#pyGraph").parent().width();
+    var height = width /3 
+
+    var graph = d3.select("#pyGraph")
+	    .append("svg")
+	    .attr("width", width) 
+	    .attr("height", height);
+
+    graph.append("rect")
+	    .attr("width", width)
+	    .attr("height", height)
+	    .style("fill", "white")
+	    .style("stroke", "black")
+	    .style("stroke-width", 2)
+
+    graph.append("line")
+	    .attr("class", "axis")
+	    .attr("x1", width*0.1)
+	    .attr("x2", width* 0.9)
+	    .attr("y1", height*0.9)
+	    .attr("y2", height*0.9)
+	    .attr("stroke-width", 1)
+	    .attr("stroke", "black");
+
+    graph.append("line")
+	    .attr("class", "axis")
+	    .attr("x1", width*0.1)
+	    .attr("x2", width* 0.1)
+	    .attr("y1", height*0.9)
+	    .attr("y2", height*0.1)
+	    .attr("stroke-width", 1)
+	    .attr("stroke", "black");
+
+    max_score = d3.max(data, function(d) { return d.score/d.count })
+
+    yscale = d3.scale.linear()
+	    .domain([0, max_score])
+	    .range([height*0.9, height*0.1]);
+
+    min_PY = d3.min(data, function(d) { return d.PY })
+    max_PY = d3.max(data, function(d) { return d.PY })
+
+
+    xscale = d3.scale.linear()
+	    .domain([min_PY, max_PY])
+	    .range([width*0.1, width*0.9]);
+
+
+	var line = d3.svg.line()
+		.x(function(d) {
+			return xscale(d.PY);
+		})
+		.y(function(d) {
+			return yscale(d.score/d.count);
+		})
+
+    var topics = d3.nest()
+    .key(function(d) {
+        return d.topic__title;
+    })
+    .sortValues(function(a,b) { return a.PY - b.PY})
+    .entries(data);
+
+    var years = d3.nest()
+    .key(function(d) {
+        return d.PY;
+    })
+    .entries(data);
+
+    console.log(topics)
+
+
+    var topicClass = function(x) {
+        if (x == topic_title || x == topic){
+            return 'current_topic';
+                } else {
+            return 'other_topic';
+        }
+    }
+
+    div = graph.append("text")   
+	    .attr("text-anchor", "middle")
+		.attr("fill", "black")
+		.attr("font-size", "16px")
+		.attr("x", width/2)
+		.attr("y", 25)
+        .attr("id", "topic")
+		.text(topic_title)
+
+    graph.selectAll("circle")
+		.data(data)
+		.enter()
+		.append("circle")
+		.attr("cx", function(d) { return xscale(d.PY)})
+		.attr("cy", function(d) { return yscale(d.score/d.count)})
+        .attr('class', function(d) {
+            return topicClass(d.topic_id)
+        });
+
+    topics.forEach(function(d) {
+        graph.append('svg:path')
+            .attr('d', line(d.values))
+            .attr('class', function() {
+                return topicClass(d.key)
+            })
+			.on("mouseover", function() {
+                d3.select(this).classed("hovered",true)
+                d3.select("#topic").transition().duration(200)
+                    .style("fill", "#b3cde3")
+                    .text(d.key);
+            })
+            .on("mouseout", function() {
+                d3.select(this).classed("hovered",false)
+                d3.select("#topic").transition().duration(200)
+                    .style("fill", "#fbb4ae")
+                    .text(topic_title);
+            })
+            .on("click", function() {
+                link = "/tmv_app/topic/"+d.values[0].topic_id
+                window.location.assign(link)
+            })
+            .attr('fill', 'none');
+    });
+
+    years.forEach(function(d) {
+        graph.append('svg:text')
+            .attr("text-anchor", "middle")
+            .attr("fill", "black")
+		    .attr("font-size", "18px")
+		    .attr("x", function() { return xscale(parseFloat(d.key))})
+		    .attr("y", height*0.97)
+            .text(function() { 
+                if(parseFloat(d.key) % 5==0) { 
+                    return d.key
+                }
+            });
+    });
+
+    
+
+
+
+    </script>
+</div>
+  </body>
+</html>
+

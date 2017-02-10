@@ -1,0 +1,45 @@
+<html>
+<head>
+{% load static %}
+    <script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="{% static 'tmv_app/js/pie.js' %}"></script>
+    <script language="JavaScript" src="{% static 'tmv_app/js/search.js' %}"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>Stats</title>
+
+    <link href="{% static 'tmv_app/css/styling.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+{{ nav_bar|safe }}
+
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">Topic Modelling Stats </td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+        <table>
+            <tr><td width="210px">
+            Model started running at {{ start_time }}, and has run {{ start_time|timesince:last_update }}.
+            <br>Last update at {{ last_update }}, or {{ last_update|timesince}} ago.
+            <br>{{ num_batches }} Batches Completed
+            <br>{{ topics_seen }} out of {{ num_docs }} Documents seen
+            <br>{{ num_topics }} Topics
+            <br>{{ num_terms }} Terms
+            </td></tr>
+        </table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>

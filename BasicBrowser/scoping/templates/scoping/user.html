@@ -1,0 +1,101 @@
+<html>
+  <head>
+    {% load static %}
+    {% load scoping_extras %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+    <title>Scoping</title>
+    <link href="{% static 'scoping/css/styling.css' %}" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    {% include 'scoping/nav_bar.html' with user=user qid=query.id %}
+    <div id="main">
+      <div id="graph">
+        <h1> Scoping Review Helper</h1>
+        <br/>
+
+        <!-- Query manager -->
+        <h2> User <span class="username">{{ user.username }}</span> Overview</h2>
+
+        <h4>Scoping queries</h4>
+
+        <table class="light" style="width:80%">
+          <tr class="title">
+            <td>ID</td>
+            <td>Title</td>
+            <td># Documents</td>
+            <td>! To review</td>
+            <td>Reviewed</td>
+            <td>Unknowns</td>
+            <td>Yes buts</td>
+          </tr>
+          {% for q in queries %}
+            {% if q.type == "default" %}
+              <tr>
+                <td><a href="/scoping/query/{{q.id}}">{{q.id}}</td>
+                <td>{{q.title}}</td>
+                <td>{{q.ndocs}}</td>
+                {% if q.revdocs > 0 %}
+                  <td class="review{{q.unreviewed_docs}} review"><a href="/scoping/check/{{q.id}}">{{q.unreviewed_docs}}</a></td>
+                  <td class="review{{q.revieweddocs}} review"><a href="/scoping/review/{{q.id}}/0">{{q.revieweddocs}}</a> ({{q.relevance}}% relevant)</td>
+                  <td class="review{{q.maybedocs}} review"><a href="/scoping/maybe/{{q.id}}/0">{{q.maybedocs}}</a></td>
+                  <td class="review{{q.yesbuts}} review"><a href="/scoping/yesbut/{{q.id}}/0">{{q.yesbuts}}</a></td>
+                {% else %}
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                {% endif %}
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </table>
+
+        <hr/>
+
+        <div style="width:100%; background:#ffe5cc">
+        <h4>Snowballing queries</h4>
+
+        <table style="width:80%">
+          <tr style="background:#f7ab31">
+            <td>ID</td>
+            <td>Title</td>
+            <td># Documents</td>
+            <td>! To review</td>
+            <td>Reviewed</td>
+            <td>Kept</td>
+            <td>Excluded</td>
+          </tr>
+          {% for q in queries %}
+            {% if q.type != "default" %}
+              <tr>
+                <td><a href="/scoping/query/{{q.id}}">{{q.id}}</td>
+                <td>{{q.title}}</td>
+                <td>{{q.ndocs}}</td>
+                {% if q.revdocs > 0 %}
+                  <td class="review{{q.unreviewed_docs}} review"><a href="/scoping/check/{{q.id}}">{{q.unreviewed_docs}}</a></td>
+                  <td class="review{{q.revieweddocs}} review"><a href="/scoping/review/{{q.id}}/0">{{q.revieweddocs}}</a> ({{q.relevance}}% relevant)</td>
+                  <td class="review{{q.maybedocs}} review"><a href="/scoping/maybe/{{q.id}}/0">{{q.maybedocs}}</a></td>
+                  <td class="review{{q.yesbuts}} review"><a href="/scoping/yesbut/{{q.id}}/0">{{q.yesbuts}}</a></td>
+                {% else %}
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                  <td>0</td>
+                {% endif %}
+              </tr>
+            {% endif %}
+          {% endfor %}
+        </table>
+        </div>
+        <p><button onclick="location.href='/accounts/logout'">Log Out</button>
+        <p><button onclick="location.href='/admin/password_change'">Change Password</button>
+
+      </div>
+    </div>
+  </body>
+
+<script>
+
+</script>
+</html>

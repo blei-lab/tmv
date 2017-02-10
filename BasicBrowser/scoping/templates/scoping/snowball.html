@@ -1,0 +1,80 @@
+<html>
+  <head>
+    {% load static %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Snowballing</title>
+    <link href="{% static 'scoping/css/stylingsbs.css' %}" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+  {% include 'scoping/nav_bar.html' with user=user sbsid=sb_session_last.id %}
+    <div id="main">
+      <div id="graph">
+
+        <h1> Snowballing Helper</h1>
+        <br/>
+
+        <!-- This gets new snowballing sessions -->
+        <h2> Start new snowballing session </h2>
+        <br/>
+
+        <form action="{% url 'scoping:start_snowballing' %}" method="post">
+        {% csrf_token %}
+
+          <h3> SB session name </h3>
+          <input type="text" name="sbs_name" />
+
+          <h3> Initial pearls </h3>
+          <p>
+            <i>Provide a list of references to start snowballing from seperated by the operator OR.</i><br/>
+            <i>Accepted formats:<i><br/>
+            <i>(AU=[author name] AND TI=[Title] AND PY=[Publishing year])</i><br/>
+            <i>(DO=[doi])<i>
+          </p>
+          <textarea rows=10 cols=100 name="sbs_initialpearls"></textarea>
+          <br/><br/>
+
+          <input type="submit" value="Start snowballing" />
+        </form>
+
+
+        <br/>
+        <hr/>
+        <br/>
+
+        <!-- Snowballing session manager -->
+        <h2> Snowballing session manager </h2>
+        <br/>
+
+        <!-- button to delete all snowballing sessions -->
+
+        <table class="light">
+          <tr class="title">
+            <td>ID</td>
+            <td>Name</td>
+            <td>Initial Pearls</td>
+            <td>Date</td>
+            <td># Steps</td>
+            <td>Latest query</td>
+            <td># Selected docs</td>
+            <td>Status</td>
+            <td>Delete</td>
+          </tr>
+          {% for sbs in sb_sessions %}
+          <tr>
+            <td>{{ sbs.id }}</td>
+            <td>{{ sbs.name }}</td>
+	    <td>{{ sbs.initial_pearls }}</td>
+            <td>{{ sbs.date }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>View progress</td>
+            <td><a href="delete_sbs/{{sbs.id}}"><button type="button" onclick="return confirm('Are you sure you would like to delete this query?');">Delete</button></a></td> 
+          </tr>
+          {% endfor %}
+        </table>
+
+      </div>
+    </div>
+  </body>
+</html>

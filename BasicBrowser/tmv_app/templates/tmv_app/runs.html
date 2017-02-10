@@ -1,0 +1,74 @@
+<html>
+<head>
+{% load static %}
+    <script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+    <script language="JavaScript" src="{% static 'tmv_app/js/pie.js' %}"></script>
+    <script language="JavaScript" src="{% static 'tmv_app/js/search.js' %}"></script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    
+    <title>Runs</title>
+
+    <link href="{% static 'tmv_app/css/styling.css' %}" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+{{ nav_bar|safe }}
+
+    <div id="top"></div>
+
+    <h1 id="header">
+        <table><tr>
+            <td id="title">Online LDA Runs</td>
+        </tr></table>
+
+        <hr noshade>
+    </h1>
+
+    <div id="main">
+		<table>
+        <td width="50%">
+        <table>
+				<tr>
+					<th>Run id</td>
+                    <th>Method</td>
+					<th>Started</td>
+					<th>Topics</td>
+					<th>Documents</td>
+					<th>Terms</td>
+                    <th>Actions</td>
+                    <th>Notes</td>
+                </tr>
+				{% for stat in stats %}
+                    {% if stat.run_id == run_id %}
+                        <tr class="active_run" onclick="window.location.href='runs/apply/{{ stat.run_id }}'">
+                    {% else %}
+                        <tr onclick="window.location.href='runs/apply/{{ stat.run_id }}'">
+                    {% endif %}
+					<td>{{ stat.run_id }}</td>
+                    <td>{{ stat.get_method_display }}</td>
+					<td>{{ stat.start }}</td>
+					<td>{{ stat.topics }}</td>
+					<td>{{ stat.docs_seen }}</td>
+					<td>{{ stat.terms }}</td>
+                    <td><button onclick="window.location.href='runs/delete/{{ stat.run_id }}';event.stopImmediatePropagation();">Delete</button></td>
+                    <td onclick=event.stopImmediatePropagation();>
+                        <form action="{% url 'tmv_app:update' stat.run_id %}" method="post" >
+                        {% csrf_token %}
+                        <textarea rows=3 name="notes">{{ stat.notes }}</textarea>
+                        <input type="submit" value="save"/>
+                        </form>
+                    </td>
+				</tr>
+				{% endfor %}
+        </table>
+        </td>
+		</table>
+    </div>
+
+    <div id="footer">
+        <br>
+        <hr noshade>
+    </div>
+</body>
+</html>

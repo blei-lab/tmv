@@ -1,0 +1,104 @@
+<html>
+  <head>
+    {% load static %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="{% static 'tmv_app/js/d3.v3.min.js' %}"></script>
+    <script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+    <title>Scoping</title>
+    <link href="{% static 'scoping/css/styling.css' %}" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+    {% include 'scoping/nav_bar.html' with user=user qid=query.id %}
+    <div id="main">
+      <div id="graph">
+        {% if qtype == "default" %}
+        <h1> Scoping Review Helper</h1>
+        {% else %}
+        <h1> Snowballing Helper</h1>
+        {% endif %}
+        <br/>
+        <!-- Query manager -->
+        <h2> Query Progress </h2>
+
+        {% if log %}
+        <br/>
+        (Refresh page to update progress)
+        <br/><br/>
+
+        <div id="logbox">
+          {% for l in log %}
+            {{l}}
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <br/>
+        {% if finished %}
+          {% if qtype == "default" %}
+            <p>Looks like it's done!</p>
+            {% if doclength == 0 %}
+              <p id="doc_adder1">{{doclength}} of these documents are in the database. Would you like to add them now? 
+              <br/>
+              <a href="/scoping/dodocadd?qid={{query.id}}"><button>Add Documents</button></a>
+            {% else %}
+              <p><a href="../docs/{{query.id}}">View the documents</a>
+            {% endif %}
+          {% else %}
+            {% if substep == 1 %}
+              <p>Looks like it's done!</p>
+              {% if doclength == 0 %}
+                <p id="doc_adder2">{{doclength}} of these documents are in the database. Would you like to add them now?
+                <br/>
+                <a href="/scoping/dodocrefadd?qid={{query.id}}"><button>Add Documents and References</button></a>
+              {% endif %}
+            {% else %}
+              <p>Looks like it's done!</p>
+              {% if doclength == 0 %}
+                <p id="doc_adder">{{doclength}} of these documents are in the database. Would you like to add them now?
+                <br/>
+                <a href="/scoping/dodocadd?qid={{query.id}}"><button>Add References missing information</button></a>
+              {% else %}
+                <p><a href="../docs/{{query.id}}">View the references</a>
+              {% endif %}
+            {% endif %}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <script>
+      function docadd(qid) {
+    
+        /*
+          $.ajax({
+            url: '/scoping/dodocadd',
+  	    data: {
+	      'qid': qid
+	    },
+	    response: function() {
+	      console.log("add docs")
+	      $("#doc_adder1").html('<p><a href="../docs/'+qid+'">View the documents</a>')
+	    }
+	  })
+        */
+      }
+
+      function docrefadd(qid) {
+
+        /*
+          $.ajax({
+            url: '/scoping/dodocrefadd',
+            data: {
+              'qid': qid
+            },
+            response: function() {
+              console.log("add docs and refs")
+              $("#doc_adder2").html('<p><a href="../docs/'+qid+'">View the references</a>')
+            }
+          })
+        */
+      }
+    </script>
+  </body>
+</html>

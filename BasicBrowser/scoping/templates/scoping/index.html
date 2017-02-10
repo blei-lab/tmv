@@ -1,0 +1,134 @@
+<html>
+<head>
+{% load static %}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Scoping</title>
+<link href="{% static 'scoping/css/styling.css' %}" rel="stylesheet" type="text/css">
+<script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+
+</head>
+  <body>
+{% include 'scoping/nav_bar.html' with user=user qid=query.id %}
+<div id="main">
+<div id="graph">
+<h1> Scoping Review Helper</h1>
+<br>
+
+<!-- Query manager -->
+<h2> Query manager </h2>
+<br>
+<p id="field_container">
+{% for u in users %}
+    {% if u == user %}
+    <span class="field_name active" name="{{u.username}}">{{ u.username }}</span>
+    {% else %}
+    <span class="field_name" name="{{u.username}}">{{ u.username }}</span>
+    {% endif %}
+{% endfor %}
+</p>
+
+<table class="light">
+
+		<tr class="title">
+			<td>ID</td>
+            <td>Created by</td>
+            <td>Title</td>
+			<td>Text</td>
+			<td>Date</td>
+			<td>Documents</td>
+            <td>Technology</td>
+            <td>Delete</td>
+        </tr>
+		{% for query in queries %}
+            {% if query.creator in active_users %}
+            <tr data-name="{{query.creator}}">     
+            {% else %}
+            <tr class="hidden" data-name="{{query.creator}}">
+            {% endif %}       
+			    <td><a href="query/{{query.id}}">{{ query.id }}</a></td>
+                <td>{{ query.creator }}</td>
+                <td>{{ query.title }}</td>
+			    <td>{{ query.text }}</td>
+			    <td>{{ query.date }}</td>
+                {% if query.r_count > 0 %}
+                <td><a href="docs/{{query.id}}">{{ query.r_count }}</a></td>
+                {% else %}
+                <td><a href="querying/{{query.id}}">View progress</a></td>
+                {% endif %}
+                <td>
+                    <select class="tech" data-query="{{query.id}}" autocomplete="off">
+                        {% if not query.tech %}
+                        <option selected value="None">{{query.tech}}</option>
+                        {% endif %}
+                        {% for t in techs %}
+                            <option value={{t.id}}>{{t.name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+                <td><a href="delete_query/{{query.id}}"><button onclick="return confirm('Are you sure you would like to delete this query?');">Delete</button></a></td>
+		    </tr>
+
+		{% endfor %}
+
+</table>
+
+<br/><hr/><br/>
+
+<!-- This gets new queries -->
+<h2> Query Getter </h2>
+<br/>
+<form action="{% url 'scoping:doquery' %}" method="post">
+  {% csrf_token %}
+
+  <h4> Query Title </h4>
+  <input type="text" name="qtitle"></input>
+
+  <input type="hidden" name="qtype" value="default"></input>
+
+  <h4> Query Source </h4>
+
+    <select name="qdb">
+        <option value="WoS">Web of Science</option>
+        <option value="scopus">Scopus</option>
+        <option value="intern">Internal</option>
+    </select>
+
+  <h4> Query Text </h4>
+  <textarea rows=3 cols=50 name="qtext"></textarea>
+  <br/><br/>
+
+  <input type="submit" value="Search Query" />
+</form>
+</div>
+</div>
+</body>
+
+<script>
+
+$(".field_name").click(function() {
+    user = $(this).attr('name')
+    $(this).toggleClass('active')
+    console.log($('*[data-name="'+user+'"]'))
+    $('*[data-name="'+user+'"]').toggleClass('hidden')
+    console.log(user)
+})
+
+$(".tech").change(function() {
+    query = $(this).attr("data-query")
+    tech = $(this).val()
+    console.log(query)
+    console.log(tech)
+    $.ajax({
+        url: '/scoping/technology_query',
+        data: {
+            'qid': query,
+            'tid': tech
+        },
+        success: function(data) {
+        }
+    })
+})
+
+</script>
+
+</html>
