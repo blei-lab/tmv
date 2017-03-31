@@ -1,11 +1,17 @@
-from django.core.management import setup_environ
-import urllib2
-import settings
-setup_environ(settings)
+import django
+import urllib.parse
+import os
+
 import math
 import threading, datetime
+import sys
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "BasicBrowser.settings")
+
+django.setup()
 
 from tmv_app.models import *
+
 
 class DBManager(threading.Thread):
     def __init__(self):
@@ -17,13 +23,13 @@ class DBManager(threading.Thread):
         self.task_count = 0
     def add(self, task):
         self.tasks.append(task)
-        print "* %s %s: added" % (datetime.datetime.now(), task.name)
+        print ( "* %s %s: added" % (datetime.datetime.now(), task.name) )
     def add_start(self, task):
         self.tasks.insert(0, task)
-        print "* %s %s: added (to start of queue)" % (datetime.datetime.now(), task.name)
+        print ( "* %s %s: added (to start of queue)" % (datetime.datetime.now(), task.name) )
     def cancel_task(self, task):
         self.tasks.remove(task)
-        print "* %s %s: canceled" % (datetime.datetime.now(), task.name)
+        print ( "* %s %s: canceled" % (datetime.datetime.now(), task.name) )
     def get_ident(self):
         self.task_count += 1
         return self.task_count
@@ -57,20 +63,20 @@ def increment_batch_count():
     stats.batch_count += 1
     stats.last_update = datetime.datetime.now()
     stats.topic_titles_current = False
-    print stats.last_update
+    print ( stats.last_update )
     stats.save()
     DB_LOCK.release()
 
 def print_task_update():
-    print "** CURRENT TASKS **"
+    print ("** CURRENT TASKS **")
     tasks = DBM.tasks[:]
     if DBM.current:
         tasks.insert(0, DBM.current)
     for task in tasks:
         active = "active" if task == DBM.current else "waiting"
         canceled = task.cancel
-        print "   %s %s\t\t%s\t\t%s" % (task.time_created, task.name, canceled, active)
-    print "** END **"
+        print ( "   %s %s\t\t%s\t\t%s" % (task.time_created, task.name, canceled, active) )
+    print ( "** END **" )
 
 class DBTask():
     def __init__(self, name):
@@ -80,15 +86,15 @@ class DBTask():
         self.name = "DB Task-%s (%s)" % (self.ident, name)
     def safe_cancel(self):
         self.cancel = True        
-        print "* %s %s: canceled" % (datetime.datetime.now(), self.name)
+        print ( "* %s %s: canceled" % (datetime.datetime.now(), self.name) )
     def run(self):
-        print "* %s %s: started" % (datetime.datetime.now(), self.name)
+        print ( "* %s %s: started" % (datetime.datetime.now(), self.name) )
         DB_LOCK.acquire()
-        print "* %s %s: DB lock acquired" % (datetime.datetime.now(), self.name)
+        print ( "* %s %s: DB lock acquired" % (datetime.datetime.now(), self.name) )
         self.db_write()
         DB_LOCK.release()
-        print "* %s %s: DB lock released" % (datetime.datetime.now(), self.name)
-        print "* %s %s: ended" % (datetime.datetime.now(), self.name)
+        print ( "* %s %s: DB lock released" % (datetime.datetime.now(), self.name) )
+        print ( "* %s %s: ended" % (datetime.datetime.now(), self.name) )
     def db_write(self):
         pass
 
@@ -127,7 +133,7 @@ def add_topics(no_topics):
 
 def add_doc(title, content):
     DB_LOCK.acquire()
-    doc = Doc(title=urllib2.unquote(title), content="")
+    doc = Doc(title=urllib.parse.unquote(title), content="")
     doc.save()
     DB_LOCK.release()
     return doc.id
@@ -136,8 +142,8 @@ def add_docs(doc_array):
     doc_ids = []
     DB_LOCK.acquire()
     for d in doc_array:
-        doc = Doc(title=urllib2.unquote(d[0]), content="")
-	doc.save()
+        doc = Doc(title=urllib.parse.unquote(d[0]), content=urllib.parse.unquote(d[1]))
+        doc.save()
         doc_ids.append(doc.id)
     DB_LOCK.release()
     return doc_ids

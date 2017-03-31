@@ -1,3 +1,11 @@
+This is a fork of the repository described below which has spread into doing 
+other things. It started by adding new features to the app below, and has now
+integrated completely new things that made sense to keep close to the tmv
+app at the time.
+
+
+
+
 ONLINE TOPIC MODEL VISUALIZATION
 
 Allison J. B. Chaney

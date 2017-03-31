@@ -1,0 +1,23 @@
+<div id="navigation">
+  <hr noshade/>
+  <table>
+    <tr>
+      {% if appmode == 'scoping' %}
+        <td class="linked"><a href="/scoping/technologies">Technologies</a></td>
+        <td class="linked"><a href="/scoping/">Queries</a></td>
+        <td class="linked"><a href="/scoping/user">{{user}}</a></td>
+        <td class="linked"><a href="/scoping/docs/{{qid}}">Documents</a></td>
+
+        <td></td>
+        <td><a href="/scoping/switchmode"><div style="color:#ee4d00;"><b><i>&gt; Switch to Snowballing mode &lt;</i></b></div></a></td>
+      {% else %}
+        <td class="linked"><a href="/scoping/snowball">Snowballing</a></td>
+        <td class="linked"><a href="/scoping/user">{{user}}</a></td>
+        <td class="linked"><a href="/scoping/docs/{{qid}}">Select documents</a></td>
+        <td class="linked"><a href="/scoping/docssbs/{{sbsid}}">See all documents</a></td>
+        <td></td>
+        <td><a href="/scoping/switchmode"><div style="color:#4d00ee;"><b><i>&gt; Switch to Scoping mode &lt;</i></b></div></a></td>
+      {% endif %}
+    </tr>
+  </table>
+</div>

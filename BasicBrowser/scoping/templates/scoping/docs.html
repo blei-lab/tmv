@@ -1,0 +1,418 @@
+<html>
+  <head>
+    {% load static %}
+    {% load scoping_extras %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="{% static 'tmv_app/js/d3.v3.min.js' %}"></script>
+    <script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+    {% if query.type == "default" %}
+      <title>Scoping</title>
+      <link href="{% static 'scoping/css/styling.css' %}" rel="stylesheet" type="text/css">
+    {% else %}
+      <title>Snowballing - Reviewing documents</title>
+      <link href="{% static 'scoping/css/stylingsbs.css' %}" rel="stylesheet" type="text/css">
+    {% endif %}
+  </head>
+  <body>
+    {% include 'scoping/nav_bar.html' with user=user qid=query.id %}
+    <div id="main">
+      <div id="graph">
+        {% if query.type == "default" %}
+          <h1> Scoping Review Helper</h1>
+        {% else %}
+          <h1> Snowballing Document Review Helper</h1>
+          <p>Quickly exclude irrelevant documents by clicking on the Exclude button</p>
+        {% endif %} 
+        <br/>
+
+        <!-- Query manager -->
+        <h2> Document list associated to <a href="/scoping/query/{{query.id}}">{{query.type}} query no. {{query.id}}</a>. 
+        <!-- <a href="/scoping/download/{{query.id}}">Download</a> these documents as a csv</h2> -->
+        <a onclick="update_fields(download='true')" id="download">Download</a> these documents as a csv</h2>
+        <br/>
+
+        <p id="field_container">
+          {% for f in fields %}
+            {% if f.name in basic_fields %}
+              <span class="field_name" data-active="true" name="{{f.path}}">{{ f.name }} <button class="filter" onclick="button_filter(event,this)">filter</button></span>, 
+            {% else %}
+              <span class="field_name" data-active="false" name="{{f.path}}">{{ f.name }}</span>, 
+            {% endif %}
+          {% endfor %}
+        </p>
+
+        <p style="text-align:left">
+          Filter these results...
+          <table id="filtertable">
+            <tr>    
+              <td>
+                <input class="f_field" type="text">
+              </td>
+              <td>
+                <select class="f_operator">
+                  <option value="icontains">CONTAINS</option>
+                  <option value="noticontains">NOT CONTAINS</option>
+                  <option value="exact">EQUALS</option>
+                  <option value="notexact">NOT EQUALS</option>
+                  <option value="gt">IS GREATER THAN</option>
+                  <option value="lt">IS LESS THAN</option>
+                </select>
+              </td>
+              <td>
+                <input type="text" class="f_text">
+              </td>
+              <td>
+                <select class="f_join" onchange="join_filter(this)">
+                  <option></option>
+                  <option>AND</option>
+                  <option>OR</option>
+                </select>
+              </td>
+            </tr>
+          </table>
+          <button id="dofilter">Filter</button>
+        </p>
+      {% if query.type == "default" %}
+        <p style="text-align:left">
+          Save this filter as <input type="text" id="tag_title"> <button onclick="savetag()">Save</button>
+        </p>
+      {% endif %}
+
+      {% if query.type != "default" %}
+        <div id="sidebar">
+          <ul>
+            <li><a href="/scoping/do_snowballing/{{ query.id }}"><button type="button">Snowball the selected documents</button></a></li>
+            <li><a href="/scoping/sbs_setAllQDocsToIrrelevant/{{ query.id }}/{{ query2.id }}/{{ sbsid }}"><button type="button">Discard all documents</button></a></li>
+            <li><a href=""><button type="button">Allocate documents to another user</button></a></li>
+          </ul>
+        </div>
+      {% endif %}
+
+        <p style="text-align:left">Showing documents 1-100 of <span id="doc_count">{{ ndocs }}</span></p> 
+        <br/>
+
+        <table class="light" style="width:100%">
+	  <tr class="title">
+            {% for f in fields %}
+              {% if f.name in basic_fields %}
+                <td class="field" name="{{f.path}}">{{f.name}}<span class="uparrow sort">&uarr;</span><span class="downarrow sort">&darr;</span></td>
+              {% endif %}
+            {% endfor %}
+<!--
+            {% if query.type != "default" %}
+              <td>Keep</td>
+              <td>Exclude</td>
+            {% endif %}
+-->
+          </tr>
+          {% for doc in docs %}
+          <tr class="datarow">
+            {% for f in fields %}
+              {% if f.name in basic_fields %}
+                <td class="data">{{doc|keyvalue:f.path}}</td>                
+              {% endif %}
+            {% endfor %}
+<!--
+            {% if query.type != "default" %}
+              <td><a href="scoping:sbsKeepDoc?qid={{query.id}}&did={{doc.UT}}"><button type="button">Keep</button></a></td>
+              <td><a href="scoping:sbsExcludeDoc?qid={{query.id}}&did={{doc.UT}}"><button type="button">Exclude</button></a></td>
+            {% endif %}
+-->
+<!--
+			<td class="data">{{ doc.title }}</td>
+            <td class="data">{{ doc.content }}</td>
+			<td class="data">{{ doc.PY }}</td>
+-->
+          </tr>
+        {% endfor %}
+      </table>
+
+      {% if query.type != "default" %}
+        <div><a href="/scoping/do_snowballing/{{ query.id }}"><button type="button">Snowball the selected documents</button></a></div>
+      {% endif %}
+
+      <br/><hr/><br/>
+
+    </div>
+  </div>
+</body>
+
+<script>
+
+var user = $("[name='docownership__{{user.username}}'")
+
+console.log(user)
+
+var qid = {{ query.id }}
+var q2id = {{ query2.id }}
+var qtype = "{{ query.type }}"
+
+console.log(qid)
+
+var fields = ['title','content','PY']
+
+$(".field").data("sortdir","-")
+
+$(".uparrow").click(function() {
+    field = $(this).parent()
+})
+$(".downarrow").click(function() {
+    field = $(this).parent()
+})
+
+$(".sort").click(function() {
+    $(this).toggleClass("sort_active")
+    update_fields()
+})
+
+$(".field_name").click(function() {
+    if ($(this).attr("data-active") == "true") {
+        $(this).attr("data-active","false")
+        $(this).children().remove()
+    } else {
+        $(this).attr("data-active","true")
+        $(this).append(' <button class="filter" onclick="button_filter(event,this)">filter</button>')
+    }
+    update_fields()
+})
+
+$("#dofilter").click(function( ) {
+    update_fields();
+})
+
+function savetag() {
+    tag_title=$("#tag_title").val()
+    var fields = []
+    $(".f_field").each(function(){
+        fields.push($(this).val())
+    })
+    var operators = []
+    $(".f_operator").each(function(){
+        operators.push($(this).val())
+    })
+    var text = []
+    $(".f_text").each(function(){
+        text.push($(this).val())
+    })
+    var joins = []
+    $(".f_join").each(function(){
+        joins.push($(this).val())
+    })
+    $.ajax({
+        url: '/scoping/sort_docs',
+        data: {
+            'qid': qid,
+            'q2id': q2id,
+            'f_fields': fields,
+            'f_operators': operators,
+            'f_text': text,
+            'f_join': joins,
+            'tag_title': tag_title
+        },
+        success: function(data) {
+            console.log(data)
+        }
+    })
+}
+
+function button_filter(event, element) {
+    event.stopPropagation();
+    var field = $(element).parent()
+    $(".f_field").each(function(){
+        if ($(this).val()=="") {
+            $(this).val(field.attr('name'))
+            return false;
+        }
+    })
+}
+
+function join_filter(element) {
+    if ($(element).val() != "") {
+        table = $("#filtertable")
+        table.append('<tr><td><input class="f_field" type="text"></td><td><select class="f_operator"><option value="icontains">CONTAINS</option><option value="noticontains">NOT</option><option>EQUALS</option><option>IS GREATER THAN</option><option>IS LESS THAN</option></select></td><td><input type="text" class="f_text"> </td><td><select class="f_join" onchange="join_filter(this)"><option></option><option>AND</option><option>OR</option></select></td></tr>')
+    }
+}
+
+function update_fields(download="false") {
+    console.log(download)
+    
+    $('body').toggleClass('waiting');
+    // get arrays of all the filter columns
+    var fields = []
+    $(".f_field").each(function(){
+        fields.push($(this).val())
+    })
+    var operators = []
+    $(".f_operator").each(function(){
+        operators.push($(this).val())
+    })
+    var text = []
+    $(".f_text").each(function(){
+        text.push($(this).val())
+    })
+    var joins = []
+    $(".f_join").each(function(){
+        joins.push($(this).val())
+    })
+    var sortfields = [];
+    var sortdirs = [];
+    $(".sort_active").each(function() {
+ 	n = $(this).parent().attr('name')
+	if ($(this).hasClass("uparrow")) {
+	    dir = "+"
+	} else {
+	    dir = "-"
+	}
+	sortfields.push(n)
+	sortdirs.push(dir)
+    })
+    var active_field_paths = [];
+    var active_field_names = [];
+    $('*[data-active="true"]').map(function(){
+        active_field_paths.push($(this).attr('name'));
+        active_field_names.push($(this).contents().get(0).nodeValue);
+    });
+    if (download=="true") {
+        url = '/scoping/sort_docs?'
+        url += 'qid='+qid
+        url += '&q2id='+q2id
+        for (i =0 ; i<active_field_paths.length; i++) {
+            url += '&fields[]='+active_field_paths[i]
+        }
+        for (i =0 ; i<fields.length; i++) {
+            url += '&f_fields[]='+fields[i]
+        }       
+        for (i =0 ; i<operators.length; i++) {
+            url += '&f_operators[]='+operators[i]
+        }  
+        for (i =0 ; i<joins.length; i++) {
+            url += '&_join[]='+joins[i]
+        }  
+        for (i =0 ; i<sortfields.length; i++) {
+            url += '&sort_fields[]='+sortfields[i]
+        }  
+        for (i =0 ; i<sortdirs.length; i++) {
+            url += '&sort_dirs[]='+sortdirs[i]
+        }  
+        url += '&f_text='+text
+        url += '&download='+download
+        window.location=url
+        console.log(url)
+    } else {
+
+        $.ajax({
+            url: '/scoping/sort_docs',
+            data: {
+                'qid': qid,
+                'q2id': q2id,
+                'fields': active_field_paths,
+                'f_fields': fields,
+                'f_operators': operators,
+                'f_text': text,
+                'f_join': joins,
+                'sort_fields': sortfields,
+	            'sort_dirs': sortdirs,
+                'download': download
+            },
+            success: function(data) {
+                var n_docs = data.n_docs
+                $("#doc_count").text(n_docs)
+                data = data.data
+                console.log(data)
+                nfields = active_field_paths.length
+                console.log(data.length)
+                $("table.light tr:first").html("")
+                $("table.light tr:not(:first)").html("")
+                for (f=0;f<active_field_paths.length;f++) {
+                    fpath = active_field_paths[f]
+                    fname = active_field_names[f]
+		    i = sortfields.indexOf(fpath)
+		    up = ""
+		    down = ""
+		    if (i > -1) {
+      		    console.log(sortdirs[i])
+		        if (sortdirs[i]=="+") {
+		            up = "sort_active"
+		        } else {
+		            down = "sort_active"
+		        }		
+		    }
+                    $("table.light tr:first").append('<td class="field" name="'+fpath+'">'+fname+' <span class="uparrow sort '+ up +'">&uarr;</span><span class="downarrow sort '+ down +'">&darr;</span></td>');
+                    $("table.light tr:not(:first)").append('<td class="data">');
+                }
+                
+                fields.push(fname.replace(".","__"))
+                $(".data").each(function( i ) {
+                    r = Math.floor(i/nfields)
+                    c = i % nfields
+                    f = active_field_paths[c]
+                    if (r+1 > n_docs) {
+                        var text = ""
+                    } else {
+                        var text = data[r][f]
+                    }
+                    $(this).html(text)
+                })
+                $(".field").data("sortdir","-")
+
+       	    $(".sort").click(function() {
+	            $(this).toggleClass("sort_active")
+		        update_fields()
+		    })
+
+                /* SBS exclude column
+                if (qtype != "default") {
+                  $("table.light tr:first").append('<td class="field" name="sbsexclude">Exclude</td>');
+                  $("table.light tr:not(:first)").append('<td class="data"><a href=""><button type="button">Exclude</button></a></td>');
+                }
+                */ 
+	        $('body').toggleClass('waiting');
+            }
+        })
+    }
+}
+
+function cyclescore(el) {
+    var el = $(el)
+    var data = {}
+    data['score'] = parseInt(el.attr("data-value"))
+    data['doc_id'] = el.attr("data-id")
+    data['tag'] = parseInt(el.attr("data-tag"))
+    data['user'] = parseInt(el.attr("data-user"))
+    data['qid'] = qid
+    data['q2id'] = q2id
+    $('body').toggleClass('waiting');
+    $.ajax({
+        url: '/scoping/cycle_score',
+	data: data,
+	success: function() {
+	    update_fields()
+	    $('body').toggleClass('waiting');
+	}
+    })
+}
+
+// For snowballing queries add user (creator) field
+if (qtype != "default") {
+  user.click()
+}
+
+/*
+$(function() {
+  var offset = $("#sidebar").offset();
+  var topPadding = 15;
+  $(window).scroll(function() {
+    if ($(window).scrollTop() > offset.top) {
+      $("#sidebar").stop().animate({
+        marginTop: $(window).scrollTop() - offset.top + topPadding
+      });
+    } else {
+      $("#sidebar").stop().animate({
+        marginTop: 0
+      });
+    };
+  });
+});
+*/  
+</script>
+</html>

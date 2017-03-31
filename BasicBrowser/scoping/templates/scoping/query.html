@@ -1,0 +1,277 @@
+<html>
+  <head>
+    {% load static %}
+    {% load scoping_extras %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="{% static 'tmv_app/js/d3.v3.min.js' %}"></script>
+    <script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+    {% if query.type == "default" %}
+      <title>Scoping</title>
+      <link href="{% static 'scoping/css/styling.css' %}" rel="stylesheet" type="text/css">
+    {% else %}
+      <title>Snowballing - Reviewing documents</title>
+      <link href="{% static 'scoping/css/stylingsbs.css' %}" rel="stylesheet" type="text/css">
+    {% endif %}
+  </head>
+  <body>
+
+    {% include 'scoping/nav_bar.html' with user=user qid=query.id %}
+
+    <div id="main">
+      <div id="graph">
+        {% if query.type == "default" %}
+          <h1> Scoping Review Helper</h1>
+        {% else %}
+          <h1> Snowballing Document Review Helper</h1>
+        {% endif %}
+        <br/>
+
+        <!-- Query manager -->
+        <h2> Query #{{query.id}} Overview - <a href="/scoping/docs/{{query.id}}">View Docs</a></h2>
+        <br/>
+
+        <table class="light" style="width:100%">
+	  <tr class="title">
+            {% for f in fields %}
+              <td class="field" name="{{f}}">{{f}} </td>
+            {% endfor %}
+            <td class="field" name="docs">Sample </td> 
+            <td>Assignment/Relevance </td> 
+            <td>Delete</td>
+          </tr>
+          {% for tag in tags %}
+            <tr class="tagdatarow" name="{{ tag.id }}">
+              {% for f in fields %}
+                <td class="data">{{tag|keyvalue:f}}</td>
+              {% endfor %}
+    
+              {% if tag.a_docs %}
+                <td>{{tag.docs}} ({{tag.a_docs}} assigned for review)</td>
+                
+                <td>{{tag.relevance}}%</td>
+              {% else %}
+                <td><input type="range" min="0" max="{{tag.docs}}" oninput="inputUpdate(value, {{tag.id}})" value="{{tag.docs}}" autocomplete="off"></td>
+                <td class="data-ndocs">{{tag.docs}} [Assign <output id="out_{{tag.id}}" class="tag_assignment" data-tagid="{{ tag.id }}">{{tag.docs}}</output> documents for review?]</td>
+                
+              {% endif %}
+                <td><a href="/scoping/delete/Tag/{{tag.id}}">Delete</a></td>
+            </tr>
+          {% endfor %}
+        </table>
+
+        <p style="text-align:left">{{ untagged }} Documents are not tagged</p>
+
+        <br/><hr/><br/>
+
+        <h2>Criteria</h2>
+
+        <form action='/scoping/update_criteria?qid={{query.id}}' method="post">
+          {% csrf_token %}
+          <h4> Enter/edit criteria below </h4>
+          <textarea rows=3 cols=50 name="criteria">{{ query.criteria }}</textarea>
+          <br/><br/>
+          <input type="submit" value="Save changes" />
+        </form>
+
+        <br/><hr/><br/>
+
+        <h2> Users </h2>
+        <table class="light" style="width:100%">
+          <tr class="title">
+            <td>Username</td>
+            <td>Email</td>
+            <td>Active</td>
+            <td>Docs Assigned</td>
+            <td>Relevant Docs</td>
+            <td>Irrelevant Docs</td>
+            <td>Maybe Docs</td>
+          </tr>
+          {% for u in users %}
+            <tr>
+              <td>{{ u.username }}</td>
+              <td>{{ u.email }}</td>
+              {% if u.onproject %}
+                <td>
+                  <label class="switch">
+                    <input type="checkbox" class="user_active" data-user="{{u.username}}" onchange="activate_user(this)" checked>
+                    <div class="slider round"></div>
+                  </label>
+                </td>
+              {% else %}
+                <td>
+                  <label class="switch">
+                    <input type="checkbox" class="user_active" data-user="{{u.username}}" onchange="activate_user(this)"></input>
+                    <div class="slider round"></div>
+                  </label>
+                </td>
+              {% endif %}
+
+              {% if u.user_docs.tdocs %}
+                <td>{{ u.user_docs.tdocs }} ({{ u.user_docs.checked_percent }}% checked)</td>
+                <td>{{ u.user_docs.reldocs }}</td>
+                <td>{{ u.user_docs.irreldocs }}</td>
+                <td>{{ u.user_docs.maybedocs }}</td>
+              {% else %}
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              {% endif %}
+        
+            </tr>      
+          {% endfor %}
+        </table>
+        <p style="text-align:left">
+          <div class="assignment_box">
+            <p>
+              <table id="split_table">
+                <tr>
+                    <td>Double Check Documents
+                  <td>
+                    <label class="switch">
+                      <input type="checkbox" id="split" onclick="updateAssignment()" checked />
+                      <div class="slider round"></div>
+                    </label>
+                  </td>
+                  <td>Split Documents</td>
+                </tr>
+              </table>
+            </p>
+            <p>Assign a total of <span id="docUserTotal"></span> documents each to <span id="userTotal"></span> users? <button onclick="do_assignment()">Assign</button></p>
+
+            <p>Clear all document-user assignments from this query? WARNING: This cannot be undone <button onclick="remove_assignments({{ query.id }})">Remove</button></p>
+
+          </div>
+        </p>
+      </div>
+    </div>
+  </body>
+
+<script>
+
+var qid = {{ query.id }}
+
+var total_docs = 0
+
+var total_users = 0
+var docsplit = $("#split").is(':checked')
+
+$(".user_active").each(function() {
+    if ($(this).is(':checked')) {
+        total_users+=1
+    }
+})
+
+$(".tag_assignment").each(function(){
+    total_docs += parseInt($(this).text())
+})
+
+updateAssignment()
+
+function inputUpdate(x,t) {
+    $('#out_'+t).val(x)
+    updateAssignment()
+}
+
+
+function updateAssignment() {
+    var active_users = []
+    var tags = []
+    var tagdocs = []
+    var total_docs = 0
+    var docsplit = $("#split").is(':checked')
+    
+    $(".user_active").each(function() {
+        if ($(this).is(':checked')) {
+            active_users.push($(this).attr("data-user") )
+        }  
+    })
+
+    $(".tag_assignment").each(function() {
+        tags.push($(this).attr("data-tagid") ) 
+        tagdocs.push($(this).val()) 
+            total_docs += parseInt($(this).val())
+    })    
+    if (docsplit==true) {
+        docs_each = Math.ceil(total_docs/active_users.length)
+    } else {
+        docs_each = Math.ceil(total_docs)
+    }
+    $("#docUserTotal").text(docs_each)
+    $("#userTotal").text(total_users)
+}
+
+function activate_user(element) {
+    checked = element.checked
+    user = element.dataset.user
+    console.log(user)
+    $.ajax({
+        url: '/scoping/activate_user',
+        data: {
+            'qid': qid,
+            'user': user,
+            'checked': checked
+        },
+        success: function(data) {
+			if (typeof data == "string") {
+				alert("Looks like you don't have permission to do this")
+				element.checked = !checked
+			} else {
+		        total_users+=data
+		        updateAssignment()
+			}
+        },
+		error: function() {
+			alert("Looks like you don't have permission to do this")
+			element.checked = !checked
+		}
+    })
+}
+
+function do_assignment() {
+    console.log("assign")
+    var active_users = []
+	var tags = []
+    var tagdocs = []
+    $(".user_active").each(function() {
+        if ($(this).is(':checked')) {
+            active_users.push($(this).attr("data-user") )
+        }  
+    })
+
+    $(".tag_assignment").each(function() {
+        tags.push($(this).attr("data-tagid") ) 
+        tagdocs.push($(this).val()) 
+    })
+    var proportion = $("#sample").val()
+	console.log(active_users)
+    console.log(tags)
+    console.log(tagdocs)
+    console.log(qid)
+    var docsplit = $("#split").is(':checked')
+    $.ajax({
+        url: '/scoping/assign_docs',
+        data : {
+            'qid': qid,
+            'users': active_users,
+            'tags': tags,
+            'tagdocs': tagdocs,
+            'docsplit': docsplit
+        },
+        success: function() {
+            location.reload()
+        }
+    })
+}
+
+function remove_assignments(qid) {
+	$.ajax({
+		url: '/scoping/remove_assignments',
+		data: {'qid':qid},
+		success: function() {
+			location.reload()
+		}
+	})
+}
+</script>
+</html>

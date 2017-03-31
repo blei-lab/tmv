@@ -1,0 +1,261 @@
+﻿FN Thomson Reuters Web of Science™
+VR 1.0
+PT J
+AU Baer, HA
+AF Baer, Hans A.
+TI The nexus of the coal industry and the state in Australia: Historical
+   dimensions and contemporary challenges
+SO ENERGY POLICY
+LA English
+DT Article
+DE Coal industry; State; Australia
+AB This article presents a historical account of the close relationship between the coal mining industry and the federal and various state governments, thus over time building a state/coal industry nexus in Australia. It examines (1) an early colonial stage extending from the late 18th century to around the time of Federation in 1902 when the nexus emerged; (2) an intermediate stage from the early 20th century to the late 1970s when the nexus became solidified; and (3) a late stage from the early 1980s to the present day when the corporate sector came to dominate the nexus. Both Coalition and Australian Labor Party governments have consistently supported the exploitation of Australia's coal and natural gas, including recently coal seam gas, and supported the expansion of coal ports. An opposition movement has called for leaving coal and coal seam gas in the ground and shifting Australia's energy production to renewable sources, particularly solar and wind energy. The article highlights how the nexus between coal mining and the state inhibits action on climate change. It argues this can be transcended by energy policy directed at socializing coal mining, wedded to a program of transitioning it to renewable energy production. (C) 2016 Elsevier Ltd. All rights reserved.
+C1 [Baer, Hans A.] Univ Melbourne, Sch Social & Polit Sci, John Medley Bldg, Melbourne, Vic 3010, Australia.
+RP Baer, HA (reprint author), Univ Melbourne, Sch Social & Polit Sci, John Medley Bldg, Melbourne, Vic 3010, Australia.
+EM hbaer@unimelb.edu.au
+CR Amos C., 2015, CARMICHAEL CONTEXT Q
+   Anderson H., 1971, COAL MINING
+   Andrews R. S., 1946, REPORT COMMITTEE ENQ
+   Australian Bureau of Statistics, 2013, 4655055002 AUSTR BUR
+   Australian Council of Trade Unions, 1992, GREENH EFF EMPL DEV
+   Australian Council of Trade Unions, 2011, CLIM CHANG IS UN BUS
+   Australian Government, 2016, AUSTR JOBS
+   Baer H. A., 2015, PR ANTHROPOL, V37, P10
+   Baer HA, 2012, GLOB CAP CLIM CHANG
+   Bell SE, 2012, ORGAN ENVIRON, V25, P359, DOI 10.1177/1086026612468138
+   Benns M., 2011, DIRTY MONEY TRUE COS
+   Brueckner M, 2014, CSR SUSTAIN ETHIC, P3, DOI 10.1007/978-3-642-53873-5_1
+   Bunker S. G., 2005, GLOBALIZATION RACE R
+   Burgmann V., 2012, CLIMATE POLITICS CLI
+   Carroll B., 2011, WHITLAM
+   Christoff P., 2009, CLIMATE CHANGE YOUNG, P29
+   Clark B, 2012, ORGAN ENVIRON, V25, P452, DOI 10.1177/1086026612462379
+   Cleary P., 2011, TOO MUCH LUCK MINING
+   Cleary R, 2012, TOO MUCH LUCK MINING
+   Coal and Lignite Panels of the Power Survey Sectional Committee, 1955, REP COAL RES COMM AU
+   Coal and Minerals Industries Division, 1998, CENT MIN AUSTR, P1998
+   Colley P., 1998, J AUST POLIT ECON, V41, P77
+   Comerford J., 1997, COAL COLONIALS FOUND
+   Corrighan T., 1980, J AUST POLIT ECON, V7, P28
+   Crough GJ., 1983, ESSAYS POLITICAL EC, P15
+   Davidson S., 2013, AUSTR COAL IND ADD V
+   Department of Resources, 1986, EN 2000 NAT EN REV
+   Dominick B., 2008, REAL UTOPIA PARTICIP, P380
+   Dryster B., 2012, AUSTR GLOBAL EC CONT
+   Branch Energy Minerals, 1999, AUSTR EXP COAL IND
+   Fagan B., 1991, INEQUALITY AUSTR SLI, P7
+   Galligan B., 1989, UTAH QUEENSLAND COAL
+   Gleeson M., 2015, GREEN LEFT WEEK 0225, P3
+   Goodman J, 2008, J AUST POLIT ECON, P201
+   Harvey D., 2014, 17 CONTRADICTIONS EN
+   Hickson K., 2009, ABC CARBON ISSUES OP
+   Kenworthy T., 2011, ENABLING EXPORTS CLO
+   Langmore D., 2013, PLANNING POWER USES
+   Lee M., 1988, J AUST POLIT ECON, V23, P45
+   Lyons K., 2013, ARENA MAG, V124, P7
+   Magdoff F, 2010, MON REV, V61, P1
+   Malm A., 2016, FOSSIL CAPITAL RISE
+   MinterEllisoir, 2010, REV MIN ROYALT AUSTR
+   [Anonymous], 2013, WHITL MAN MIN
+   Orgill B., 2012, WHY LABOR SHOULD SAV
+   Owen D., 2012, CONUNDRUM SCI INNOVA
+   Paul E, 2012, NEOLIBERAL AUSTRALIA AND US IMPERIALISM IN EAST ASIA, P1, DOI 10.1057/9781137272782
+   Pearse G., 2009, Q ESSAY
+   Pearse G., 2013, BIG COAL AUSTR DIRTI
+   Reeves A., 2011, UNDERWORLD COALMINER
+   Robinson WI, 2014, GLOBAL CAPITALISM AND THE CRISIS OF HUMANITY, P1, DOI 10.1017/CBO9781107590250
+   Rosewarne S., 2014, CLIMATE ACTION UPSUR
+   Sandercock L, 1975, ESSAYS POLITICAL EC
+   Taylor L, 2013, GUARDIAN
+   Wettenhall R., 1965, POLITICAL Q, V36, DOI 10.1111/j.1467-923X.1965.tb01118.x
+   White LA., 2008, CULTURE
+   World Coal Association, 2015, COAL MARK PRIC
+NR 57
+TC 0
+Z9 0
+U1 5
+U2 5
+PU ELSEVIER SCI LTD
+PI OXFORD
+PA THE BOULEVARD, LANGFORD LANE, KIDLINGTON, OXFORD OX5 1GB, OXON, ENGLAND
+SN 0301-4215
+EI 1873-6777
+J9 ENERG POLICY
+JI Energy Policy
+PD DEC
+PY 2016
+VL 99
+BP 194
+EP 202
+DI 10.1016/j.enpol.2016.05.033
+PG 9
+WC Energy & Fuels; Environmental Sciences; Environmental Studies
+SC Energy & Fuels; Environmental Sciences & Ecology
+GA EC3VS
+UT WOS:000388055800021
+ER
+
+PT J
+AU Lynch, MJ
+   Long, MA
+   Barrett, KL
+   Stretesky, PB
+AF Lynch, Michael J.
+   Long, Michael A.
+   Barrett, Kimberly L.
+   Stretesky, Paul B.
+TI IS IT A CRIME TO PRODUCE ECOLOGICAL DISORGANIZATION? Why Green
+   Criminology and Political Economy Matter in the Analysis of Global
+   Ecological Harms
+SO BRITISH JOURNAL OF CRIMINOLOGY
+LA English
+DT Article
+DE green criminology; political economy; ecological disorganization;
+   treadmill of production
+ID CARBON-DIOXIDE EMISSIONS; CLIMATE-CHANGE; UNITED-STATES; AMAZONIAN
+   DEFORESTATION; ECOSYSTEM SERVICES; CORPORATE CRIME; PUBLIC-HEALTH;
+   IMPACT; LEAD; CHINA
+AB We argue in this paper for a political economic approach to the study of global ecological crimes. Green criminological studies often employ case study approaches which help explain a particular green crime; however, these studies lack a coherent theoretical basis. Based on ecological Marxism and treadmill of production approaches, we outline a theoretical approach for green criminology that focuses on crimes of ecological disorganizationuthat is, green harms that are the result of organizing the productive forces of the economy in a manner that is consistent with capitalism. We conclude that, to truly understand and remedy green harms, a focus on political economy is necessary.
+C1 [Long, Michael A.] Oklahoma State Univ, Dept Sociol, Stillwater, OK 74078 USA.
+   [Lynch, Michael J.] Univ S Florida, Dept Criminol, Tampa, FL 33620 USA.
+   [Barrett, Kimberly L.] Eastern Michigan Univ, Sociol Anthropol & Criminol Dept, Ypsilanti, MI 48197 USA.
+   [Stretesky, Paul B.] Univ Colorado Denver, Sch Publ Affairs, Denver, CO 80217 USA.
+RP Stretesky, PB (reprint author), Univ Colorado Denver, Sch Publ Affairs, Denver, CO 80217 USA.
+EM mjlynch@usf.edu; michael.long@okstate.edu; KLBarrett29@yahoo.com;
+   paul.stretesky@ucdenver.edu
+OI Long, Michael/0000-0002-6101-126X
+CR Agnew R, 2012, THEOR CRIMINOL, V16, P21, DOI 10.1177/1362480611416843
+   Kim Y., 1999, HOMICIDE STUDIES, V3, P78, DOI 10.1177/1088767999003001005
+   Beirne P, 1999, CRIMINOLOGY, V37, P117, DOI 10.1111/j.1745-9125.1999.tb00481.x
+   Beirne P., 2009, CONFRONTING ANIMAL A
+   Bennear LS, 2008, REGUL GOV, V2, P293, DOI 10.1111/j.1748-5991.2008.00042.x
+   BENNETT RR, 1991, SOCIOL QUART, V32, P343, DOI 10.1111/j.1533-8525.1991.tb00163.x
+   Bensel Richard Franklin, 2000, POLITICAL EC AM IND
+   Borneman J, 1997, APPL ENVIRON MICROB, V63, P2647
+   Burgess R, 2012, Q J ECON, V127, P1707, DOI 10.1093/qje/qjs034
+   Burkett P., 2006, MARXISM ECOLOGICAL E
+   Butchart SHM, 2004, PLOS BIOL, V2, P2294, DOI 10.1371/journal.pbio.0020383
+   California Department of Education, 2013, LEAD PAINT
+   Carson R., 1962, SILENT SPRING
+   Clark B., 2010, INT J SOCIOLOGY, V40, P23
+   Clark B., 2012, SOCIOLOGY COMPASS, V6, P557
+   Clark B, 2012, ORGAN ENVIRON, V25, P452, DOI 10.1177/1086026612462379
+   Coe MT, 2009, J HYDROL, V369, P165, DOI 10.1016/j.jhydrol.2009.02.043
+   Colborn T., 1996, OUR STOLEN FUTURE
+   Cramer W, 2004, PHILOS T ROY SOC B, V359, P331, DOI 10.1098/rstb.2003.1428
+   de Marchi S, 2006, J RISK UNCERTAINTY, V32, P57, DOI 10.1007/s10797-006-6666-3
+   Ehrhardt-Martinez K, 2002, SOC SCI QUART, V83, P226, DOI 10.1111/1540-6237.00080
+   Ellefsen R, 2012, ECO-GLOBAL CRIMES: CONTEMPORARY PROBLEMS AND FUTURE CHALLENGES, P181
+   Environmental Protection Agency (EPA), 2013, LEAD DRINK WAT
+   Environmental Protection Agency (EPA), 2013, NAT PRIOR LIST
+   Fall S, 2010, INT J CLIMATOL, V30, P1980, DOI 10.1002/joc.1996
+   Foster John, 2010, ECOLOGICAL RIFT CAPI
+   Foster John Bellamy, 2000, MARXS ECOLOGY MAT NA
+   Foster JB, 2008, ORGAN ENVIRON, V21, P3, DOI 10.1177/1086026607313580
+   Foster JB, 2012, ORGAN ENVIRON, V25, P211, DOI 10.1177/1086026612459964
+   Gereffi G., 1999, WORKSH SPREAD GAINS
+   Gilbert SG, 2006, NEUROTOXICOLOGY, V27, P693, DOI 10.1016/j.neuro.2006.06.008
+   Gould K. A., 2008, TREADMILL PRODUCTION
+   Griffith JA, 2003, ENVIRON MANAGE, V32, P572, DOI 10.1007/s00267-003-0078-2
+   Hall M., 2013, VICTIMS ENV HARM RIG
+   Harding JS, 2003, NEW ZEAL J MAR FRESH, V37, P333
+   Harvey CA, 2006, ECOL APPL, V16, P1986, DOI 10.1890/1051-0761(2006)016[1986:POADID]2.0.CO;2
+   Hillyard P., 2005, CRIMINAL OBSESSIONS
+   Hillyard P, 2007, CRIME LAW SOCIAL CH, V48, P9, DOI 10.1007/s10611-007-9079-z
+   Hubbell SP, 2008, P NATL ACAD SCI USA, V105, P11498, DOI 10.1073/pnas.0801915105
+   Humphreys David, 2003, GLOBAL ENVIRON POLIT, V3, P40, DOI 10.1162/152638003322068209
+   Arrigo B., 2013, ROUTLEDGE H IN PRESS
+   Jeffery C. Ray, 1977, CRIME PREVENTION ENV
+   Jorgenson A. K., 2010, CRITICAL SOCIOLOGY, V36, P453
+   Jorgenson AK, 2012, SOC NATUR RESOUR, V25, P1182, DOI 10.1080/08941920.2012.656186
+   Jorgenson AK, 2011, SOC SCI RES, V40, P226, DOI 10.1016/j.ssresearch.2010.09.004
+   Jorgenson AK, 2010, GLOBAL ENVIRON POLIT, V10, P7, DOI 10.1162/glep.2010.10.1.7
+   Kanae S, 2001, J HYDROMETEOROL, V2, P51, DOI 10.1175/1525-7541(2001)002<0051:IODORP>2.0.CO;2
+   Kovel J., 2007, ENEMY NATURE END CAP
+   Landrigan PJ, 2002, ENVIRON HEALTH PERSP, V110, P721
+   Lawton RO, 2001, SCIENCE, V294, P584, DOI 10.1126/science.291.5504.584
+   Li Y, 2008, ENERG POLICY, V36, P1907, DOI 10.1016/j.enpol.2008.02.005
+   STROMMAN A., 2011, ENERG POLICY, V39, P3456
+   Long MA, 2012, ORGAN ENVIRON, V25, P328, DOI 10.1177/1086026612452266
+   Lorion CM, 2009, ECOL APPL, V19, P468, DOI 10.1890/08-0050.1
+   Lovelock J., 2000, GAIA NEW LOOK LIFE E
+   Lovelock J., 2007, REVENGE GAIA EARTHS
+   Lowe AJ, 2005, HEREDITY, V95, P255, DOI 10.1038/sj.hdy.6800725
+   Lynch M., 2010, GLOBAL ENV HARM GREE
+   Lynch M., 2013, ROUTLEDGE INT HDB GR
+   Lynch MJ, 2010, CRIME LAW SOCIAL CH, V54, P213, DOI 10.1007/s10611-010-9245-6
+   Lynch MJ, 2004, J CRIM JUST, V32, P389, DOI 10.1016/j.jcrimjus.2004.06.001
+   Lynch M. J., 2006, PRIMER RADICAL CRIMI
+   Magdoff F., 2011, WHAT EVERY ENV NEEDS
+   Mandel Ernest, 1990, MARXIAN EC, P1
+   Markowitz G, 2003, J PUBLIC HEALTH POL, V24, P105, DOI 10.2307/3343508
+   Marx Karl, 1974, CAPITAL, VI
+   Matthews H.S., 2001, J INFRASTRUCT SYST, V7, P13, DOI 10.1061/(ASCE)1076-0342(2001)7:1(13)
+   Mbatu R., 2010, GeoJournal, V75, P443, DOI 10.1007/s10708-009-9312-7
+   McCollister KE, 2010, DRUG ALCOHOL DEPEN, V108, P98, DOI 10.1016/j.drugalcdep.2009.12.002
+   Millerd F, 2011, CLIMATIC CHANGE, V104, P629, DOI 10.1007/s10584-010-9872-z
+   Needleman HL, 1997, ENVIRON RES, V74, P95, DOI 10.1006/enrs.1997.3767
+   Negri AJ, 2004, J CLIMATE, V17, P1306, DOI 10.1175/1520-0442(2004)017<1306:TIOADO>2.0.CO;2
+   Nicholls RJ, 1999, GLOBAL ENVIRON CHANG, V9, pS69, DOI 10.1016/S0959-3780(99)00019-9
+   NOBRE CA, 1991, J CLIMATE, V4, P957, DOI 10.1175/1520-0442(1991)004<0957:ADARCC>2.0.CO;2
+   Nurse A, 2013, GREEN CRIMINOL, P1
+   O'Connor J., 1973, FISCAL CRISIS STATE
+   Olmo R., 1998, THEORETICAL CRIMINOL, V2, P269
+   Quinney R., 1970, SOCIAL REALITY CRIME
+   Ray D.K., 2006, J GEOPHYS RES, V111, P1
+   Reece Erik, 2006, LOST MOUNTAIN YEAR V
+   ROSNER D, 1985, AM J PUBLIC HEALTH, V75, P344, DOI 10.2105/AJPH.75.4.344
+   Schnaiberg A., 1980, ENV SURPLUS SCARCITY
+   SCOTT AJ, 1986, ANN ASSOC AM GEOGR, V76, P25, DOI 10.1111/j.1467-8306.1986.tb00101.x
+   Sebbenn AM, 2008, FOREST ECOL MANAG, V254, P335, DOI 10.1016/j.foreco.2007.08.009
+   SHERMAN LW, 1989, CRIMINOLOGY, V27, P27, DOI 10.1111/j.1745-9125.1989.tb00862.x
+   South N, 1998, THEORETICAL CRIMINOL, V2, P211, DOI DOI 10.1177/1362480698002002004
+   STEINGRABER S., 1997, LIVING DOWNSTREAM
+   Stretesky P., 2013, TREATMILL CRIME POLI
+   Stretesky Paul B., 2013, J CRIME JUSTICE, V36, P235
+   Stretesky PB, 2011, LANDSCAPE RES, V36, P209, DOI 10.1080/01426397.2010.547572
+   Stretesky PB, 2009, SOC SCI RES, V38, P239, DOI 10.1016/j.ssresearch.2008.08.004
+   Stretesky PB, 2002, SOCIOL QUART, V43, P553, DOI 10.1111/j.1533-8525.2002.tb00066.x
+   Sweeney BW, 2004, P NATL ACAD SCI USA, V101, P14132, DOI 10.1073/pnas.0405895101
+   Van Rompaey AJJ, 2002, EARTH SURF PROC LAND, V27, P481, DOI 10.1002/esp.335
+   Walters R, 2010, CRIT CRIMINOL-NETH, V18, P307, DOI 10.1007/s10612-010-9119-3
+   Wedeen RP, 2009, INT J OCCUP ENV HEAL, V15, P195
+   Walters R, 2013, CRIT CRIM PERSP, P1, DOI 10.1057/9781137273994
+   White R, 2011, TRANSNATIONAL ENVIRONMENTAL CRIME: TOWARD AN ECO-GLOBAL CRIMINOLOGY, P1
+   White R, 2012, CLIMATE CHANGE CRIMI
+   Williams C, 1996, AGGRESS VIOLENT BEH, V1, P191, DOI 10.1016/1359-1789(95)00015-1
+   Williams C., 1996, SOCIAL JUSTICE, V23, P16
+   York R, 2011, NAT CULT, V6, P103, DOI 10.3167/nc.2011.060201
+   Zedler JB, 2005, ANNU REV ENV RESOUR, V30, P39, DOI 10.1146/annurev.energy.30.050504.144248
+   Zhang H, 1996, J CLIMATE, V9, P1497, DOI 10.1175/1520-0442(1996)009<1497:IOTDPI>2.0.CO;2
+   Zheng FL, 2005, AGR ECOSYST ENVIRON, V108, P85, DOI 10.1016/j.agee.2004.12.009
+   Zilney L, 2006, CRIMINAL JUSTICE REV, V31, P47, DOI 10.1177/0734016806288258
+   ZOU XM, 1995, FOREST ECOL MANAG, V78, P147, DOI 10.1016/0378-1127(95)03586-9
+   Zullig KJ, 2010, PUBLIC HEALTH REP, V125, P548
+NR 108
+TC 12
+Z9 12
+U1 2
+U2 34
+PU OXFORD UNIV PRESS
+PI OXFORD
+PA GREAT CLARENDON ST, OXFORD OX2 6DP, ENGLAND
+SN 0007-0955
+EI 1464-3529
+J9 BRIT J CRIMINOL
+JI Br. J. Criminol.
+PD NOV
+PY 2013
+VL 53
+IS 6
+BP 997
+EP 1016
+DI 10.1093/bjc/azt051
+PG 20
+WC Criminology & Penology
+SC Criminology & Penology
+GA 238ZS
+UT WOS:000325991500002
+ER
+
+EF

@@ -1,0 +1,145 @@
+<html>
+    <head>
+        {% load static %}
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script src="{% static 'tmv_app/js/d3.v3.min.js' %}"></script>
+        <script language="JavaScript" src="https://code.jquery.com/jquery-1.4.4.js"></script>
+        <title>Scoping</title>
+        {% if query.type == "default" %}
+          <link href="{% static 'scoping/css/styling.css' %}" rel="stylesheet" type="text/css">
+        {% else %}
+          <link href="{% static 'scoping/css/stylingsbs.css' %}" rel="stylesheet" type="text/css">
+        {% endif %}
+    </head>
+    <body>
+
+        {% include 'scoping/nav_bar.html' with user=user qid=query.id %}
+        <div id="main">
+            <div id="graph">
+                {% if query.type == "default" %}
+                  <h1> Scoping Review Helper</h1>
+                {% else %}
+                  <h1> Snowballing - Query Helper</h1>
+                {% endif %}
+                <br/>
+
+                <!-- Query manager -->
+                {% if query.type == "default" %}
+                  <h2> Query Progress </h2>
+                {% else %}
+                    {% if substep == "1" %}
+                      <h2> Query Progress - SB substep {{ substep }} (Identifying references in submitted documents)</h2>
+                    {% else %}
+                      <h2> Query Progress - SB substep {{ substep }} (Obtaining information for all identified references)</h2>
+                    {% endif %}
+                {% endif %}
+
+                {% if log %}
+                    {% if query.type == "default" %}
+                      <br/>
+                        (Refresh page to update progress)
+                      <br/><br/>
+
+                      <div id="logbox">
+                        {% for l in log %}
+                            {{l}}<br>
+                        {% endfor %}
+                      </div>
+                    {% else %}
+                      <br/>
+                        (Refresh page to update progress)
+                      <br/><br/>
+                      <table>
+                        <tr class="logbox">
+                          <td style="width: 50%">
+                            Backward query
+                            <div id="logbox_sb">
+                              {% for l in log %}
+                                {{l}}<br>
+                              {% endfor %}
+                            </div>
+                          </td>
+                          <td style="width: 50%">
+                            Forward query
+                            <div id="logbox_sb">
+                              {% for l in log2 %}
+                                {{l}}<br>
+                              {% endfor %}
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    {% endif %}
+                {% endif %}
+
+                <br/>
+                {% if finished %}
+<!-- Scoping review -->
+                    {% if query.type == "default" %}
+                        <p>Looks like it's done!</p>
+                        {% if doclength == 0 %}
+                            <p id="doc_adder1">{{doclength}} of these documents are in the database. Would you like to add them now?
+                            <br/>
+                            <a href="/scoping/dodocadd?qid={{query.id}}&db={{query.database}}"><button>Add Documents</button></a>
+                        {% else %}
+                            <p><a href="../../../docs/{{query.id}}">View the documents</a>
+                        {% endif %}
+                    {% else %}
+<!-- Snowballing session -->
+                        {% if substep == "1" %}
+                            <p>Looks like it's done! (Another query might be needed in case references are not yet in the database) </p>
+                            {% if doclength == 0 %}
+                                <p id="doc_adder2">{{reftotlen}} references were identified in the submitted documents. {{refdblen}} of them are already in the database. {{refscraplen}} need to be scraped to get additional information (authors, abstract ...). Would you like to do this now?
+                                <br/>
+                                <a href="/scoping/dodocrefadd?qid={{query.id}}&q2id={{query2.id}}&db={{query.database}}"><button>Add citations and scrape References</button></a>
+                            {% endif %}
+                        {% else %}
+                            <p>Looks like it's done!</p>
+                            {% if docadded != "1" and query.dlstat != "NOREC" %}
+                                <p id="doc_adder1">{{doclength}} references were correctly retrieved. Would you like to add them to the database?
+                                <br/>
+                                <a href="/scoping/dodocadd?qid={{query.id}}&db={{query.database}}"><button>Add missing information</button></a>
+                            {% else %}
+                                <p><a href="../../../../sbs_allocateDocsToUser/{{query.id}}/{{query2.id}}">View the references and citations</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        <script>
+            function docadd(qid) {
+
+              /*
+                $.ajax({
+                  url: '/scoping/dodocadd',
+                  data: {
+                    'qid': qid
+                  },
+                  response: function() {
+                    console.log("add docs")
+                    $("#doc_adder1").html('<p><a href="../docs/'+qid+'">View the documents</a>')
+                  }
+                })
+              */
+            }
+
+            function docrefadd(qid) {
+
+              /*
+                $.ajax({
+                  url: '/scoping/dodocrefadd',
+                  data: {
+                    'qid': qid
+                  },
+                  response: function() {
+                    console.log("add docs and refs")
+                    $("#doc_adder2").html('<p><a href="../docs/'+qid+'">View the references</a>')
+                  }
+                })
+              */
+            }
+        </script>
+    </body>
+</html>
